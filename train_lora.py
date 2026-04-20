@@ -88,10 +88,10 @@ LORA_OUTPUT_PATH = r"./qwen3.5-0.8b-lora-data"
 
 # 4bit量化配置
 bnb_config = BitsAndBytesConfig(
-    load_in_4bit=True,
-    bnb_4bit_use_double_quant=True,
-    bnb_4bit_quant_type="nf4",
-    bnb_4bit_compute_dtype=torch.float16
+    load_in_4bit=True,                     # 启用4bit量化
+    bnb_4bit_use_double_quant=True,        # 使用双重量化
+    bnb_4bit_quant_type="nf4",             # 指定 4 位量化的类型，nf为归一化浮点量化
+    bnb_4bit_compute_dtype=torch.float16   # 模型计算时使用的数据类型
 )
 
 # LoRA超参数
@@ -99,9 +99,9 @@ lora_config = LoraConfig(
     r=16,                     # LoRA秩，8-32之间，小模型16足够
     lora_alpha=32,            # 缩放参数，通常是r的2倍
     target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],  # Qwen核心注意力层
-    lora_dropout=0.05,
-    bias="none",
-    task_type="CAUSAL_LM"
+    lora_dropout=0.05,                # LoRA dropout，防止过拟合
+    bias="none",                    # 不使用偏置项
+    task_type="CAUSAL_LM"           # 任务类型，因果语言模型
 )
 
 # 训练参数
